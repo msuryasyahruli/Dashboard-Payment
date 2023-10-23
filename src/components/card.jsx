@@ -6,7 +6,7 @@ const Card = () => {
   const [card, setcard] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/card`)
+      .get(`https://dashboard-api-smoky.vercel.app/card`)
       .then((res) => {
         setcard(res.data);
       })
@@ -18,7 +18,7 @@ const Card = () => {
   const [transaction, settransaction] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/transaction`)
+      .get(`https://dashboard-api-smoky.vercel.app/transaction`)
       .then((res) => {
         settransaction(res.data);
       })

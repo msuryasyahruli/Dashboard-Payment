@@ -6,7 +6,7 @@ const Invoice = () => {
   const [transaction, settransaction] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/transaction`)
+      .get(`https://dashboard-api-smoky.vercel.app/transaction`)
       .then((res) => {
         settransaction(res.data);
       })

@@ -8,7 +8,7 @@ const Home = () => {
   const [account, setAccount] = useState([])
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/account`)
+      .get(`https://dashboard-api-smoky.vercel.app/account`)
       .then((res) => {
         setAccount(res.data[0]);
       })

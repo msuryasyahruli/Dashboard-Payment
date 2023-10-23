@@ -5,7 +5,7 @@ const Expenses = () => {
   const [balance, setbalance] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/balance`)
+      .get(`https://dashboard-api-smoky.vercel.app/balance`)
       .then((res) => {
         setbalance(res.data[0]);
       })
