@@ -1,7 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Card = () => {
+  const [card, setcard] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/card`)
+      .then((res) => {
+        setcard(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const [transaction, settransaction] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/transaction`)
+      .then((res) => {
+        settransaction(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <div
@@ -25,11 +50,11 @@ const Card = () => {
         >
           <div className="pb-4">
             <p style={{ lineHeight: 2, margin: 0, fontSize: 16 }}>Name Card</p>
-            <h5>Muhammad Surya Syahruli</h5>
+            <h5>{card.name}</h5>
           </div>
           <div className="mt-5" style={{ textAlign: "end" }}>
-            <h4>0918 8124 0042 8129</h4>
-            <p className="m-0">12/20 - 124</p>
+            <h4>{card.nocard}</h4>
+            <p className="m-0">12/20 - {card.cvv}</p>
           </div>
         </div>
         <hr />
@@ -52,60 +77,27 @@ const Card = () => {
         </div>
         <div>
           <p style={{ color: "#AAAAAA" }}>13 April 2022</p>
-          <div
-            style={{
-              backgroundColor: "#FAFAFA",
-              borderRadius: 10,
-              padding: 15,
-            }}
-            className="d-flex justify-content-between mb-3"
-          >
-            <div>
-              <h6>Cash Withdrawal</h6>
-              <p style={{ lineHeight: 1, margin: 0, fontSize: 16 }}>
-                13 Apr, 2022
-              </p>
+          {transaction.map((transaction, index) => (
+            <div
+              key={index}
+              style={{
+                backgroundColor: "#FAFAFA",
+                borderRadius: 10,
+                padding: 15,
+              }}
+              className="d-flex justify-content-between mb-3"
+            >
+              <div>
+                <h6>{transaction.iname}</h6>
+                <p style={{ lineHeight: 1, margin: 0, fontSize: 16 }}>
+                  13 Apr, 2022
+                </p>
+              </div>
+              <div>
+                <h5 style={{ color: "#F3735E" }}>${transaction.money}</h5>
+              </div>
             </div>
-            <div>
-              <h5 style={{ color: "#F3735E" }}>$20,129</h5>
-            </div>
-          </div>
-          <div
-            style={{
-              backgroundColor: "#FAFAFA",
-              borderRadius: 10,
-              padding: 15,
-            }}
-            className="d-flex justify-content-between mb-3"
-          >
-            <div>
-              <h6>Landing Page project</h6>
-              <p style={{ lineHeight: 1, margin: 0, fontSize: 16 }}>
-                13 Apr, 2022
-              </p>
-            </div>
-            <div>
-              <h5 style={{ color: "#F3735E" }}>$2,000</h5>
-            </div>
-          </div>
-          <div
-            style={{
-              backgroundColor: "#FAFAFA",
-              borderRadius: 10,
-              padding: 15,
-            }}
-            className="d-flex justify-content-between mb-3"
-          >
-            <div>
-              <h6>Juni Mobile App project</h6>
-              <p style={{ lineHeight: 1, margin: 0, fontSize: 16 }}>
-                13 Apr, 2022
-              </p>
-            </div>
-            <div>
-              <h5 style={{ color: "#F3735E" }}>$20,129</h5>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

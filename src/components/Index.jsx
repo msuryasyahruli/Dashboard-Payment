@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Expenses from "./expenses";
 import Invoice from "./Invoice";
 import Card from "./card";
+import axios from "axios";
 
 const Home = () => {
+  const [account, setAccount] = useState([])
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/account`)
+      .then((res) => {
+        setAccount(res.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },[])
+  
   return (
     <div className="">
       <div className="row">
@@ -45,21 +58,28 @@ const Home = () => {
               <img src="" alt="" />
             </div>
             <div style={{ height: "auto", width: "auto" }}>
-              <h6>Muhammad Surya</h6>
+              <h6>{account.name}</h6>
               <p style={{ lineHeight: 1, fontSize: "12px", margin: 0 }}>
-                syahruli@gmail.com
+                {account.email}
               </p>
             </div>
           </div>
+          <button className="d-flex align-items-center" style={{ width: 193, height: 40, backgroundColor: "transparent", border: 0, borderRight: "4px solid #4EB7F2" }}>
+            <img src={require("../assets/category-2.png")} alt="category" />
+            <h6 style={{ margin: 0, padding: 10, color: "#4EB7F2" }}>Dashboard</h6>
+          </button>
         </div>
-        <div className="col-md-10 row" style={{ backgroundColor: "#FAFAFA", padding: 30, height: "100vh" }}>
-            <div className="col-md-7">
-              <Expenses />
-              <Invoice/>
-            </div>
-            <div className="col-md-5">
-              <Card/>
-            </div>
+        <div
+          className="col-md-10 row"
+          style={{ backgroundColor: "#FAFAFA", padding: 30, height: "100vh" }}
+        >
+          <div className="col-md-7">
+            <Expenses />
+            <Invoice />
+          </div>
+          <div className="col-md-5">
+            <Card />
+          </div>
         </div>
       </div>
     </div>

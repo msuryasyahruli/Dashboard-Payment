@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Invoice = () => {
+  const [transaction, settransaction] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/transaction`)
+      .then((res) => {
+        settransaction(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div>
       <div
@@ -18,93 +31,38 @@ const Invoice = () => {
         <div className="w-100 mt-3">
           <p style={{ margin: 0 }}>Latest Transaction</p>
           <div className="d-flex">
-            <div
-              style={{
-                height: 53,
-                width: 193,
-                backgroundColor: "#FAFAFA",
-                display: "flex",
-                alignItems: "center",
-                borderRadius: 10,
-                marginRight: 10,
-              }}
-            >
+            {transaction.map((transaction, index) => (
               <div
+                key={index}
                 style={{
-                  borderRadius: 100,
-                  height: 32,
-                  width: 32,
-                  margin: 5,
-                  backgroundColor: "#98DAFF",
+                  height: 53,
+                  width: 193,
+                  backgroundColor: "#FAFAFA",
+                  display: "flex",
+                  alignItems: "center",
+                  borderRadius: 10,
+                  marginRight: 10,
                 }}
               >
-                <img src="" alt="" />
+                <div
+                  style={{
+                    borderRadius: 100,
+                    height: 32,
+                    width: 32,
+                    margin: 5,
+                    backgroundColor: "#98DAFF",
+                  }}
+                >
+                  <img src="" alt="" />
+                </div>
+                <div style={{ height: "auto", width: "auto" }}>
+                  <h6>{transaction.cname}</h6>
+                  <p style={{ lineHeight: 1, fontSize: "12px", margin: 0 }}>
+                    {transaction.cemail}
+                  </p>
+                </div>
               </div>
-              <div style={{ height: "auto", width: "auto" }}>
-                <h6>Lekan Okeowo</h6>
-                <p style={{ lineHeight: 1, fontSize: "12px", margin: 0 }}>
-                  lekan@gmail.com
-                </p>
-              </div>
-            </div>
-            <div
-              style={{
-                height: 53,
-                width: 193,
-                backgroundColor: "#FAFAFA",
-                display: "flex",
-                alignItems: "center",
-                borderRadius: 10,
-                marginRight: 10,
-              }}
-            >
-              <div
-                style={{
-                  borderRadius: 100,
-                  height: 32,
-                  width: 32,
-                  margin: 5,
-                  backgroundColor: "#98DAFF",
-                }}
-              >
-                <img src="" alt="" />
-              </div>
-              <div style={{ height: "auto", width: "auto" }}>
-                <h6>Jhon doe</h6>
-                <p style={{ lineHeight: 1, fontSize: "12px", margin: 0 }}>
-                  jhon@gmail.com
-                </p>
-              </div>
-            </div>
-            <div
-              style={{
-                height: 53,
-                width: 193,
-                backgroundColor: "#FAFAFA",
-                display: "flex",
-                alignItems: "center",
-                borderRadius: 10,
-                marginRight: 10,
-              }}
-            >
-              <div
-                style={{
-                  borderRadius: 100,
-                  height: 32,
-                  width: 32,
-                  margin: 5,
-                  backgroundColor: "#98DAFF",
-                }}
-              >
-                <img src="" alt="" />
-              </div>
-              <div style={{ height: "auto", width: "auto" }}>
-                <h6>Mr Lorem</h6>
-                <p style={{ lineHeight: 1, fontSize: "12px", margin: 0 }}>
-                  lorem@gmail.com
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
         <hr />
@@ -162,14 +120,14 @@ const Invoice = () => {
           <div style={{ width: "49%" }}>
             <p style={{ margin: 0 }}>Item mount</p>
             <select
-              class="custom-select"
+              className="custom-select"
               style={{
                 backgroundColor: "#FAFAFA",
                 padding: 10,
                 width: "100%",
                 borderRadius: 10,
                 border: 0,
-                color:"#AAAAAA"
+                color: "#AAAAAA",
               }}
             >
               <option value="1">USD</option>
@@ -179,7 +137,7 @@ const Invoice = () => {
           </div>
         </div>
         <div className="w-100 mt-3 d-flex justify-content-between">
-          <div style={{ width: 300, textAlign: "center", width: "49%" }}>
+          <div style={{ textAlign: "center", width: "49%" }}>
             <Link
               href=""
               style={{
